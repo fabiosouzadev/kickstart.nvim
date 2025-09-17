@@ -1,0 +1,67 @@
+-- lazy.nvim
+return {
+  'olimorris/codecompanion.nvim',
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+    'nvim-treesitter/nvim-treesitter',
+  },
+  opts = {
+    -- NOTE: The log_level is in `opts.opts`
+    opts = {
+      log_level = 'DEBUG', -- or "TRACE"
+      language = 'Portugues',
+    },
+    adapters = {
+      http = {
+        openrouter = function()
+          return require('codecompanion.adapters').extend('openai_compatible', {
+            env = {
+              url = 'https://openrouter.ai/api',
+              api_key = 'OPENROUTER_API_KEY',
+              chat_url = '/v1/chat/completions',
+            },
+            schema = {
+              model = {
+                default = 'moonshotai/kimi-dev-72b:free',
+              },
+            },
+          })
+        end,
+        deepseekcoder = function()
+          return require('codecompanion.adapters').extend('ollama', {
+            name = 'deepseekcoder', -- Give this adapter a different name to differentiate it from the default ollama adapter
+            opts = {
+              vision = true,
+              stream = true,
+            },
+            schema = {
+              model = {
+                default = 'deepseek-coder:6.7b-instruct-q4_K_M',
+              },
+              -- num_ctx = {
+              --   default = 16384,
+              -- },
+              -- think = {
+              --   default = false,
+              -- },
+              -- keep_alive = {
+              --   default = '5m',
+              -- },
+            },
+          })
+        end,
+      },
+    },
+    strategies = {
+      chat = {
+        adapter = 'openrouter',
+      },
+      inline = {
+        adapter = 'openrouter',
+      },
+      cmd = {
+        adapter = 'openrouter',
+      },
+    },
+  },
+}

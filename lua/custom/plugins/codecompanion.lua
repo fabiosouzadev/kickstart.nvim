@@ -1,39 +1,47 @@
--- lazy.nvim
 return {
   'olimorris/codecompanion.nvim',
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-    'nvim-treesitter/nvim-treesitter',
-  },
   opts = {
-    -- NOTE: The log_level is in `opts.opts`
-    opts = {
-      language = 'portuguese',
-      log_level = 'DEBUG', -- or "TRACE"
-    },
-    display = {
-      chat = {
-        show_settings = true,
+    adapters = {
+      http = {
+        openrouter = function()
+          return require('codecompanion.adapters').extend('openai_compatible', {
+            env = {
+              url = 'https://openrouter.ai/api',
+              api_key = 'OPENROUTER_API_KEY',
+              chat_url = '/v1/chat/completions',
+            },
+            schema = {
+              model = {
+                default = 'moonshotai/kimi-dev-72b:free',
+              },
+            },
+          })
+        end,
       },
     },
     strategies = {
-      chat = { adapter = 'gemini' },
-      inline = {
-        adapter = 'gemini',
-        layout = 'horizontal',
-        keymaps = {
-          accept_change = { modes = { n = 'ga' }, description = 'Accept the suggested change' },
-          reject_change = { modes = { n = 'gx' }, description = 'Reject the suggested change' },
-        },
+      chat = {
+        adapter = 'openrouter',
+        model = 'moonshotai/kimi-dev-72b:free',
       },
-      agent = { adapter = 'gemini' },
+      inline = {
+        adapter = 'openrouter',
+      },
       cmd = {
-        adapter = 'gemini',
+        adapter = 'openrouter',
+        model = 'moonshotai/kimi-dev-72b:free',
       },
     },
+    -- NOTE: The log_level is in `opts.opts`
+    opts = {
+      log_level = 'DEBUG',
+    },
   },
-  keys = {
-    { '<leader>[', '<cmd>CodeCompanionActions<cr>', desc = 'CodeCompanion Action' },
-    { '<leader>cc', '<cmd>CodeCompanionChat Toggle<cr>', desc = 'CodeCompanion Toggle' },
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+    'nvim-treesitter/nvim-treesitter',
+    'j-hui/fidget.nvim', -- Display status
+    -- { "echasnovski/mini.pick", config = true },
+    -- { "ibhagwan/fzf-lua", config = true },
   },
 }

@@ -13,10 +13,23 @@ return {
     instructions_file = 'avante.md',
     -- for example
   },
-  provider = 'gemini',
-  cursor_applying_provider = 'gemini',
-  auto_suggestions_provider = 'gemini',
-  memory_summary_provider = 'gemini',
+  -- provider = 'gemini',
+  provider = 'openrouter',
+  cursor_applying_provider = 'openrouter',
+  auto_suggestions_provider = 'openrouter',
+  memory_summary_provider = 'openrouter',
+  providers = {
+    ollama = {
+      endpoint = 'http://localhost:11434',
+      model = 'llama3.1:8b',
+    },
+    openrouter = {
+      __inherited_from = 'openai',
+      endpoint = 'https://openrouter.ai/api/v1',
+      api_key_name = 'OPENROUTER_API_KEY',
+      model = 'moonshotai/kimi-dev-72b:free',
+    },
+  },
   gemini = {
     model = 'gemini-2.0-flash-lite',
   },
