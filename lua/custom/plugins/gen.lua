@@ -32,6 +32,6 @@ return
     debug = false, -- Prints errors and the command which is run.
   },
   keys = {
-    { '<leader>]', ':Gen<CR>', { desc = 'Open Gen LLM' } },
+    { '<leader>]', ':Gen<CR>', desc = 'Open Gen LLM' },
   },
 }

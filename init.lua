@@ -866,7 +866,7 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'minuet', 'lsp', 'path', 'snippets', 'lazydev' },
+        default = { 'minuet', 'codecompanion', 'lsp', 'path', 'buffer', 'snippets', 'lazydev' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         },
@@ -956,7 +956,25 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'typescript',
+        'yaml',
+        'prisma',
+        'php',
+        'javascript',
+        'graphql',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {

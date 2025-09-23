@@ -3,9 +3,14 @@ return {
     'milanglacier/minuet-ai.nvim',
     config = function()
       require('minuet').setup {
-        -- Your configuration options here
+        cmp = {
+          enable_auto_complete = false,
+        },
+        blink = {
+          enable_auto_complete = false,
+        }, -- Your configuration options here
         virtualtext = {
-          auto_trigger_ft = { 'typescript' },
+          -- auto_trigger_ft = { 'typescript' },
           keymap = {
             -- accept whole completion
             accept = '<A-A>',
