@@ -1,7 +1,7 @@
 return {
   {
     'olimorris/codecompanion.nvim',
-    -- event = 'VeryLazy',
+    event = 'VeryLazy',
     cmd = { 'CodeCompanion', 'CodeCompanionChat', 'CodeCompanionActions' },
     dependencies = {
       'j-hui/fidget.nvim', -- Display status
@@ -219,8 +219,14 @@ return {
     optional = true,
     opts = {
       sources = {
-        per_filetype = {
-          codecompanion = { 'codecompanion' },
+        -- if you want to use auto-complete
+        default = { 'codecompanion' },
+        providers = {
+          codecompanion = {
+            enabled = true,
+            module = 'codecompanion.providers.completion.blink',
+            name = 'CodeCompanion',
+          },
         },
       },
     },

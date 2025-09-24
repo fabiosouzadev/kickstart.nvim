@@ -866,7 +866,7 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'minuet', 'codecompanion', 'lsp', 'path', 'buffer', 'snippets', 'lazydev' },
+        default = { 'lsp', 'path', 'buffer', 'snippets', 'lazydev' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         },

@@ -110,7 +110,7 @@ return {
       },
       sources = {
         -- if you want to use auto-complete
-        -- default = { 'minuet' },
+        default = { 'minuet' },
         providers = {
           minuet = {
             name = 'minuet',
