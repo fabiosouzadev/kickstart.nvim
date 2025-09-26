@@ -56,9 +56,9 @@ return {
       adapters = {
         http = {
 
-          qwen3 = function()
+          ollamallama31 = function()
             return require('codecompanion.adapters').extend('ollama', {
-              name = 'qwen3', -- Give this adapter a different name to differentiate it from the default ollama adapter
+              name = 'ollamallama31', -- give this adapter a different name to differentiate it from the default ollama adapter
               opts = {
                 vision = true,
                 stream = true,
@@ -77,9 +77,30 @@ return {
             })
           end,
 
-          ollamaqwen3b = function()
+          ollamaqwen3 = function()
             return require('codecompanion.adapters').extend('ollama', {
-              name = 'ollamaqwen3b', -- give this adapter a different name to differentiate it from the default ollama adapter
+              name = 'ollamaqwen3', -- give this adapter a different name to differentiate it from the default ollama adapter
+              opts = {
+                vision = true,
+                stream = true,
+              },
+              schema = {
+                model = {
+                  default = 'qwen3:latest',
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                keep_alive = {
+                  default = '5m',
+                },
+              },
+            })
+          end,
+
+          ollamaqwen25coder3b = function()
+            return require('codecompanion.adapters').extend('ollama', {
+              name = 'ollamaqwen25coder3b', -- give this adapter a different name to differentiate it from the default ollama adapter
               opts = {
                 vision = true,
                 stream = true,
@@ -98,9 +119,9 @@ return {
             })
           end,
 
-          ollamaqwendev = function()
+          ollamaqwen25coder = function()
             return require('codecompanion.adapters').extend('ollama', {
-              name = 'ollamaqwendev', -- give this adapter a different name to differentiate it from the default ollama adapter
+              name = 'ollamaqwen25coder', -- give this adapter a different name to differentiate it from the default ollama adapter
               schema = {
                 model = {
                   default = 'qwen2.5-coder', --7b
@@ -111,20 +132,6 @@ return {
                 keep_alive = {
                   default = '5m',
                 },
-              },
-            })
-          end,
-
-          ollamaqwenbig = function()
-            return require('codecompanion.adapters').extend('ollama', {
-              name = 'ollamaqwenbig', -- give this adapter a different name to differentiate it from the default ollama adapter
-              schema = {
-                model = {
-                  default = 'qwen2.5-coder:14b',
-                },
-                -- num_ctx = {
-                --   default = 16384,
-                -- },
               },
             })
           end,
