@@ -177,7 +177,7 @@ return {
         chat = {
           -- adapter = 'qwen3',
           -- adapter = 'ollamaqwendev',
-          adapter = 'ollamaqwendev',
+          adapter = 'ollamaqwen25coder',
           -- adapter = 'ollamaqwen3b',
           -- adapter = 'ollamaqwenbig',
           -- adapter = 'kimi72b',
@@ -187,14 +187,14 @@ return {
         },
         inline = {
           -- adapter = 'qwen3',
-          adapter = 'ollamaqwendev',
+          adapter = 'ollamaqwen25coder',
           -- adapter = 'ollamaqwen3b',
           -- adapter = 'openrouter',
           -- adapter = 'gemini',
           -- model = 'gemini-2.5-flash-lite'
         },
         cmd = {
-          adapter = 'ollamaqwendev',
+          adapter = 'ollamaqwen25coder',
           -- adapter = 'gemini',
           -- model = 'gemini-2.5-flash-lite'
         },
