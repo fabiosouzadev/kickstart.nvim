@@ -88,13 +88,22 @@ return {
 
       -- You can provide additional configuration to the handlers,
       -- see mason-nvim-dap README for more information
-      handlers = {},
+      handlers = {
+        function(config)
+          -- all sources with no handler get passed here
+
+          -- Keep original functionality
+          require('mason-nvim-dap').default_setup(config)
+        end,
+      },
 
       -- You'll need to check that you have the required things installed
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'js',
+        'python',
       },
     }
 
@@ -132,6 +141,36 @@ return {
     --   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
     -- end
 
+    require('dap').adapters['pwa-node'] = {
+      type = 'server',
+      host = 'localhost',
+      port = '${port}',
+      executable = {
+        -- command = 'node',
+        -- 💀 Make sure to update this path to point to your installation
+        command = vim.fn.stdpath 'data' .. '/mason/packages/js-debug-adapter/js-debug-adapter',
+        args = { '${port}' },
+      },
+    }
+    dap.configurations.typescript = {
+      {
+        type = 'pwa-node',
+        -- attach to an already running node process with --inspect flag
+        -- default port: 9222
+        request = 'attach',
+        -- name of the debug action you have to select for this config
+        name = 'Attach debugger to existing `node --inspect` process',
+        -- for compiled languages like TypeScript or Svelte.js
+        sourceMaps = true,
+        -- resolve source maps in nested locations while ignoring node_modules
+        resolveSourceMapLocations = {
+          '${workspaceFolder}/**',
+          '!**/node_modules/**',
+        },
+        cwd = '${workspaceFolder}/src',
+        skipFiles = { '${workspaceFolder}/node_modules/**/*.js' },
+      },
+    }
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
