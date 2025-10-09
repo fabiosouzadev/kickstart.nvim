@@ -10,7 +10,7 @@ return {
           enable_auto_complete = false,
         }, -- Your configuration options here
         virtualtext = {
-          -- auto_trigger_ft = { 'typescript' },
+          auto_trigger_ft = { 'typescript' },
           keymap = {
             -- accept whole completion
             accept = '<A-A>',
@@ -35,7 +35,7 @@ return {
         -- of 512, serves as an good starting point to estimate your computing
         -- power. Once you have a reliable estimate of your local computing power,
         -- you should adjust the context window to a larger value.
-        context_window = 512,
+        context_window = 1024,
         provider_options = {
           -- Ollama --
           openai_fim_compatible = {
@@ -43,8 +43,8 @@ return {
             name = 'Ollama',
             end_point = 'http://localhost:11434/v1/completions',
             -- model = 'qwen2.5-coder:3b',
-            model = 'qwen2.5-coder:1.5b',
-            -- model = 'qwen2.5-coder:0.5b',
+            -- model = 'qwen2.5-coder:1.5b',
+            model = 'qwen2.5-coder:0.5b',
             optional = {
               max_tokens = 56,
               top_p = 0.9,
@@ -100,28 +100,42 @@ return {
   {
     'saghen/blink.cmp',
     optional = true,
-    opts = {
-      keymap = {
-        ['<A-y>'] = {
-          function(cmp)
-            cmp.show { providers = { 'minuet' } }
-          end,
+    opts = function(_, opts)
+      opts.sources.default = opts.sources.default or {}
+      vim.list_extend(opts.sources.default, { 'minuet' })
+
+      opts.sources.providers = vim.tbl_extend('keep', {
+        minuet = {
+          name = 'minuet',
+          module = 'minuet.blink',
+          async = true,
+          timeout_ms = 3000,
+          score_offset = 50,
         },
-      },
-      sources = {
-        -- if you want to use auto-complete
-        default = { 'minuet' },
-        providers = {
-          minuet = {
-            name = 'minuet',
-            module = 'minuet.blink',
-            async = true,
-            timeout_ms = 3000,
-            score_offset = 50,
-          },
-        },
-      },
-      completion = { trigger = { prefetch_on_insert = false } },
-    },
+      }, opts.sources.providers or {})
+    end,
+    -- opts = {
+    --   keymap = {
+    --     ['<A-y>'] = {
+    --       function(cmp)
+    --         cmp.show { providers = { 'minuet' } }
+    --       end,
+    --     },
+    --   },
+    --   sources = {
+    --     -- if you want to use auto-complete
+    --     default = { 'minuet' },
+    --     providers = {
+    --       minuet = {
+    --         name = 'minuet',
+    --         module = 'minuet.blink',
+    --         async = true,
+    --         timeout_ms = 3000,
+    --         score_offset = 50,
+    --       },
+    --     },
+    --   },
+    --   completion = { trigger = { prefetch_on_insert = false } },
+    -- },
   },
 }

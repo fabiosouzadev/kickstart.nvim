@@ -224,18 +224,30 @@ return {
   {
     'saghen/blink.cmp',
     optional = true,
-    opts = {
-      sources = {
-        -- if you want to use auto-complete
-        default = { 'codecompanion' },
-        providers = {
-          codecompanion = {
-            enabled = true,
-            module = 'codecompanion.providers.completion.blink',
-            name = 'CodeCompanion',
-          },
+    opts = function(_, opts)
+      opts.sources.default = opts.sources.default or {}
+      vim.list_extend(opts.sources.default, { 'codecompanion' })
+
+      opts.sources.providers = vim.tbl_extend('keep', {
+        codecompanion = {
+          enabled = true,
+          module = 'codecompanion.providers.completion.blink',
+          name = 'CodeCompanion',
         },
-      },
-    },
+      }, opts.sources.providers or {})
+    end,
+    -- opts = {
+    --   sources = {
+    --     -- if you want to use auto-complete
+    --     default = { 'codecompanion' },
+    --     providers = {
+    --       codecompanion = {
+    --         enabled = true,
+    --         module = 'codecompanion.providers.completion.blink',
+    --         name = 'CodeCompanion',
+    --       },
+    --     },
+    --   },
+    -- },
   },
 }
