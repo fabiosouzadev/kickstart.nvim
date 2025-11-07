@@ -3,14 +3,16 @@ return {
     'milanglacier/minuet-ai.nvim',
     config = function()
       require('minuet').setup {
-        cmp = {
-          enable_auto_complete = false,
-        },
+        -- cmp = {
+        --   enable_auto_complete = false,
+        -- },
+
         blink = {
-          enable_auto_complete = false,
+          enable_auto_complete = true,
         }, -- Your configuration options here
+
         virtualtext = {
-          auto_trigger_ft = { 'typescript' },
+          auto_trigger_ft = { 'typescript', 'javascript', 'python' },
           keymap = {
             -- accept whole completion
             accept = '<A-A>',
@@ -29,27 +31,25 @@ return {
         --- Providers ----
         provider = 'openai_fim_compatible', -- Ollama
         -- provider = 'gemini', -- Gemini
-        n_completions = 1, -- recommend for local model for resource saving
-        -- I recommend beginning with a small context window size and incrementally
-        -- expanding it, depending on your local computing power. A context window
-        -- of 512, serves as an good starting point to estimate your computing
-        -- power. Once you have a reliable estimate of your local computing power,
-        -- you should adjust the context window to a larger value.
-        context_window = 512,
+        -- n_completions = 1,
+        context_window = 4096,
+
         provider_options = {
+
           -- Ollama --
           openai_fim_compatible = {
             api_key = 'TERM',
             name = 'Ollama',
             end_point = 'http://localhost:11434/v1/completions',
             -- model = 'qwen2.5-coder:3b',
-            model = 'qwen2.5-coder:1.5b',
-            -- model = 'qwen2.5-coder:0.5b',
+            -- model = 'qwen2.5-coder:1.5b',
+            model = 'qwen2.5-coder:0.5b',
             optional = {
-              max_tokens = 56,
+              max_tokens = 256,
               top_p = 0.9,
             },
           },
+
           -- Gemini --
           gemini = {
             model = 'gemini-2.5-flash-lite',
@@ -74,6 +74,7 @@ return {
               },
             },
           },
+
           -- Gemini --
           -- request_timeout = 2.5,
           -- throttle = 1500, -- Increase to reduce costs and avoid rate limits
@@ -109,8 +110,8 @@ return {
           name = 'minuet',
           module = 'minuet.blink',
           async = true,
-          timeout_ms = 3000,
-          score_offset = 50,
+          -- timeout_ms = 3000,
+          score_offset = 100,
         },
       }, opts.sources.providers or {})
 
@@ -119,11 +120,7 @@ return {
       }, opts.completion or {})
 
       opts.keymap = vim.tbl_extend('keep', {
-        ['<A-y>'] = {
-          function(cmp)
-            cmp.show { providers = { 'minuet' } }
-          end,
-        },
+        ['<A-y>'] = require('minuet').make_blink_map(),
       }, opts.keymap or {})
     end,
   },
