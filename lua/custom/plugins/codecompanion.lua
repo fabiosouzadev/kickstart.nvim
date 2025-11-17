@@ -56,43 +56,44 @@ return {
       adapters = {
         http = {
 
-          ollamallama31 = function()
+          --- Qwen 2.5 ---
+          ollamaqwen25coder05b = function()
             return require('codecompanion.adapters').extend('ollama', {
-              name = 'ollamallama31', -- give this adapter a different name to differentiate it from the default ollama adapter
+              name = 'ollamaqwen25coder05b', -- give this adapter a different name to differentiate it from the default ollama adapter
               opts = {
                 vision = true,
                 stream = true,
               },
               schema = {
                 model = {
-                  default = 'qwen3:latest',
+                  default = 'qwen2.5-coder:0.5b',
                 },
                 num_ctx = {
-                  default = 16384,
+                  default = 2048,
                 },
-                keep_alive = {
-                  default = '5m',
-                },
+                -- keep_alive = {
+                --   default = '5m',
+                -- },
               },
             })
           end,
 
-          ollamaqwen3 = function()
+          ollamaqwen25coder15b = function()
             return require('codecompanion.adapters').extend('ollama', {
-              name = 'ollamaqwen3', -- give this adapter a different name to differentiate it from the default ollama adapter
+              name = 'ollamaqwen25coder15b', -- give this adapter a different name to differentiate it from the default ollama adapter
               opts = {
                 vision = true,
                 stream = true,
               },
               schema = {
                 model = {
-                  default = 'qwen3:latest',
+                  default = 'qwen2.5-coder:1.5b',
                 },
                 num_ctx = {
-                  default = 16384,
+                  default = 4096,
                 },
                 keep_alive = {
-                  default = '5m',
+                  default = '15m',
                 },
               },
             })
@@ -110,27 +111,10 @@ return {
                   default = 'qwen2.5-coder:3b',
                 },
                 num_ctx = {
-                  default = 16384,
+                  default = 4096 * 2,
                 },
                 keep_alive = {
-                  default = '5m',
-                },
-              },
-            })
-          end,
-
-          ollamaqwen25coder = function()
-            return require('codecompanion.adapters').extend('ollama', {
-              name = 'ollamaqwen25coder', -- give this adapter a different name to differentiate it from the default ollama adapter
-              schema = {
-                model = {
-                  default = 'qwen2.5-coder', --7b
-                },
-                num_ctx = {
-                  default = 8096,
-                },
-                keep_alive = {
-                  default = '5m',
+                  default = '15m',
                 },
               },
             })
@@ -151,6 +135,7 @@ return {
             })
           end,
         },
+
         acp = {
           gemini_cli = function()
             return require('codecompanion.adapters').extend('gemini_cli', {
@@ -175,28 +160,13 @@ return {
       },
       strategies = {
         chat = {
-          -- adapter = 'qwen3',
-          -- adapter = 'ollamaqwendev',
-          adapter = 'ollamaqwen25coder',
-          -- adapter = 'ollamaqwen3b',
-          -- adapter = 'ollamaqwenbig',
-          -- adapter = 'kimi72b',
-          -- adapter = 'openrouter',
-          -- adapter = 'gemini',
-          -- model = 'gemini-2.5-flash-lite',
+          adapter = 'ollamaqwen25coder15b',
         },
         inline = {
-          -- adapter = 'qwen3',
-          adapter = 'ollamaqwen25coder',
-          -- adapter = 'ollamaqwen3b',
-          -- adapter = 'openrouter',
-          -- adapter = 'gemini',
-          -- model = 'gemini-2.5-flash-lite'
+          adapter = 'ollamaqwen25coder15b',
         },
         cmd = {
-          adapter = 'ollamaqwen25coder',
-          -- adapter = 'gemini',
-          -- model = 'gemini-2.5-flash-lite'
+          adapter = 'ollamaqwen25coder05b',
         },
       },
     },
@@ -236,18 +206,5 @@ return {
         },
       }, opts.sources.providers or {})
     end,
-    -- opts = {
-    --   sources = {
-    --     -- if you want to use auto-complete
-    --     default = { 'codecompanion' },
-    --     providers = {
-    --       codecompanion = {
-    --         enabled = true,
-    --         module = 'codecompanion.providers.completion.blink',
-    --         name = 'CodeCompanion',
-    --       },
-    --     },
-    --   },
-    -- },
   },
 }

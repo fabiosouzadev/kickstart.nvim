@@ -31,8 +31,8 @@ return {
         --- Providers ----
         provider = 'openai_fim_compatible', -- Ollama
         -- provider = 'gemini', -- Gemini
-        -- n_completions = 1,
-        context_window = 4096,
+        n_completions = 1,
+        context_window = 2048,
 
         provider_options = {
 
@@ -45,7 +45,7 @@ return {
             -- model = 'qwen2.5-coder:1.5b',
             model = 'qwen2.5-coder:0.5b',
             optional = {
-              max_tokens = 256,
+              max_tokens = 64,
               top_p = 0.9,
             },
           },
