@@ -158,13 +158,17 @@ return {
           end,
         },
       },
+
       strategies = {
+
         chat = {
-          adapter = 'ollamaqwen25coder15b',
+          adapter = 'ollamaqwen25coder3b',
         },
+
         inline = {
           adapter = 'ollamaqwen25coder15b',
         },
+
         cmd = {
           adapter = 'ollamaqwen25coder05b',
         },
