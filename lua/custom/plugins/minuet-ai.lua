@@ -3,16 +3,11 @@ return {
     'milanglacier/minuet-ai.nvim',
     config = function()
       require('minuet').setup {
-        -- cmp = {
-        --   enable_auto_complete = false,
-        -- },
-
         blink = {
-          enable_auto_complete = true,
-        }, -- Your configuration options here
-
+          enable_auto_complete = false,
+        },
         virtualtext = {
-          auto_trigger_ft = { 'typescript', 'javascript', 'python' },
+          -- auto_trigger_ft = { 'typescript', 'javascript', 'python' },
           keymap = {
             -- accept whole completion
             accept = '<A-A>',
@@ -29,28 +24,33 @@ return {
           },
         },
         --- Providers ----
-        provider = 'openai_fim_compatible', -- Ollama
+        provider = 'gemini', -- Ollama
         -- provider = 'gemini', -- Gemini
-        n_completions = 1,
-        context_window = 4096,
-
+        notify = 'debug',
+        -- notify = 'warn',
+        request_timeout = 10,
+        -- throttle = 2000,
+        -- n_completions = 1,
+        -- context_window = 4096,
+        add_single_line_entry = false,
         provider_options = {
 
           -- Ollama --
           openai_fim_compatible = {
             api_key = 'TERM',
-            name = 'Ollama',
+            name = 'ollama-local',
             end_point = 'http://localhost:11434/v1/completions',
             -- model = 'qwen2.5-coder:3b',
             -- model = 'qwen2.5-coder:1.5b',
             model = 'qwen2.5-coder:0.5b',
             optional = {
-              max_tokens = 56,
+              max_tokens = 64,
               top_p = 0.9,
+              stop = { '<|endoftext|>' },
             },
           },
 
-          -- Ollama --
+          -- Ollama BFF --
           -- openai_fim_compatible = {
           --   api_key = 'TERM',
           --   name = 'Ollama',
@@ -64,6 +64,7 @@ return {
           --   },
           -- },
           --
+
           -- Gemini --
           gemini = {
             model = 'gemini-2.5-flash-lite',
@@ -93,13 +94,52 @@ return {
           -- request_timeout = 2.5,
           -- throttle = 1500, -- Increase to reduce costs and avoid rate limits
           -- debounce = 600, -- Increase to reduce costs and avoid rate limits
+
+          -- openai_compatible = {
+          --   api_key = 'AIML_API_KEY',
+          --   end_point = 'https://api.aimlapi.com/v1/chat/completions',
+          --   model = 'google/gemma-3-12b-it',
+          --   name = 'AIML',
+          --   optional = {
+          --     max_tokens = 56,
+          --     top_p = 0.9,
+          --     provider = {
+          --       -- Prioritize throughput for faster completion
+          --       sort = 'throughput',
+          --     },
+          --   },
+          -- },
+          --
+
+          -- CHUTES --
+          -- openai_compatible = {
+          --   model = 'openai/gpt-oss-20b',
+          --   stream = true,
+          --   end_point = 'https://llm.chutes.ai/v1/chat/completions',
+          --   api_key = 'CHUTES_API_KEY',
+          --   name = 'Chutes',
+          --   optional = {
+          --     stop = nil,
+          --     max_tokens = 256,
+          --     -- pass any additional parameters you want to send to OpenAI request,
+          --     -- e.g.
+          --     -- stop = { 'end' },
+          --     -- max_completion_tokens = 256,
+          --     top_p = 0.9,
+          --     reasoning_effort = 'low',
+          --     -- reasoning_effort = 'none'
+          --   },
+          -- },
+          --
+
+          -- Openrouter --
           openai_compatible = {
             api_key = 'OPENROUTER_API_KEY',
             end_point = 'https://openrouter.ai/api/v1/chat/completions',
-            model = 'moonshotai/kimi-k2',
+            model = 'moonshotai/kimi-k2:free',
             name = 'Openrouter',
             optional = {
-              max_tokens = 56,
+              max_tokens = 64,
               top_p = 0.9,
               provider = {
                 -- Prioritize throughput for faster completion
@@ -107,8 +147,9 @@ return {
               },
             },
           },
+
+          -- Providers --
         },
-        -- Providers --
       }
     end,
   },
