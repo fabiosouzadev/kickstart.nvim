@@ -152,31 +152,31 @@ return {
         },
       }
     end,
-  },
-  {
-    'saghen/blink.cmp',
-    optional = true,
-    opts = function(_, opts)
-      opts.sources.default = opts.sources.default or {}
-      vim.list_extend(opts.sources.default, { 'minuet' })
+    dependencies = {
+      'saghen/blink.cmp',
+      optional = true,
+      opts = function(_, opts)
+        opts.sources.default = opts.sources.default or {}
+        vim.list_extend(opts.sources.default, { 'minuet' })
 
-      opts.sources.providers = vim.tbl_extend('keep', {
-        minuet = {
-          name = 'minuet',
-          module = 'minuet.blink',
-          async = true,
-          -- timeout_ms = 3000,
-          score_offset = 100,
-        },
-      }, opts.sources.providers or {})
+        opts.sources.providers = vim.tbl_extend('keep', {
+          minuet = {
+            name = 'minuet',
+            module = 'minuet.blink',
+            async = true,
+            -- timeout_ms = 3000,
+            score_offset = 100,
+          },
+        }, opts.sources.providers or {})
 
-      opts.completion = vim.tbl_extend('keep', {
-        trigger = { prefetch_on_insert = false },
-      }, opts.completion or {})
+        opts.completion = vim.tbl_extend('keep', {
+          trigger = { prefetch_on_insert = false },
+        }, opts.completion or {})
 
-      opts.keymap = vim.tbl_extend('keep', {
-        ['<A-y>'] = require('minuet').make_blink_map(),
-      }, opts.keymap or {})
-    end,
+        opts.keymap = vim.tbl_extend('keep', {
+          ['<A-y>'] = require('minuet').make_blink_map(),
+        }, opts.keymap or {})
+      end,
+    },
   },
 }
